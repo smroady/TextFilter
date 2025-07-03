@@ -52,14 +52,14 @@ def fileExcluder(metaDataContent):
 
 def parseFile(valuePair, file):
     newFile = []
-    flag = 0
-    for i in file:
-        for key in valuePair:
-            if file[i][key] in valuePair[key]:
-                flag = 1
-        if flag != 1:
-            newFile.append(file[i])
-        flag = 0
+    exclude = False
+    for idx, words_to_exclude in valuePair.items():
+        if idx < len(file) and file[idx] in words_to_exclude:
+            exclude = True
+            break
+
+    if not exclude:
+        newFile.append(file)
     return newFile
 
 if __name__ == "__main__":
@@ -74,9 +74,10 @@ if __name__ == "__main__":
         metaDataValue = fileExcluder(metaDataContent)
         dataValue = fileExcluder(dataContent)
 
-        filteredMetaData = parseFile(metaDataValue, metaDataValue[1:])
-        filteredData = parseFile(dataContent, dataContent[1:])
-
+        filteredMetaData = parseFile(metaDataValue, metaDataContent)
+        filteredData = parseFile(dataValue, dataContent)
+        print(filteredMetaData)
+        print(filteredData)
 
 
     else :
