@@ -51,15 +51,23 @@ def fileExcluder(metaDataContent):
         print(f"Error: '{e}'")
 
 def parseFile(valuePair, file):
-    newFile = []
-    exclude = False
-    for idx, words_to_exclude in valuePair.items():
-        if idx < len(file) and file[idx] in words_to_exclude:
-            exclude = True
-            break
 
-    if not exclude:
-        newFile.append(file)
+    normalizedValuePair = {
+            idx: [word.strip().lower() for word in words]
+            for idx, words in valuePair.items()
+        }
+
+    newFile = []
+    for row in file:
+        exclude = False
+
+        for idx, words_to_exclude in normalizedValuePair.items():
+            if idx < len(row) and row[idx].lower() in words_to_exclude:
+                exclude = True
+                break
+
+        if not exclude:
+            newFile.append(row)
     return newFile
 
 if __name__ == "__main__":
@@ -73,7 +81,8 @@ if __name__ == "__main__":
 
         metaDataValue = fileExcluder(metaDataContent)
         dataValue = fileExcluder(dataContent)
-
+        print(metaDataValue)
+        print(dataValue)
         filteredMetaData = parseFile(metaDataValue, metaDataContent)
         filteredData = parseFile(dataValue, dataContent)
         print(filteredMetaData)
