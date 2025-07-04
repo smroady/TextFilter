@@ -70,6 +70,25 @@ def parseFile(valuePair, file):
             newFile.append(row)
     return newFile
 
+def listCombine(metaData, regularData):
+    referenceMeta = metaData[0]
+
+    newList = []
+
+    for row in regularData:
+        if row[0] in referenceMeta:
+            newList.append(row)
+
+    return newList
+
+def write_file(data):
+    output_folder = os.getcwd()
+    os.makedirs(output_folder, exist_ok=True) #creates directory if it does not exist
+    with open(os.path.join(output_folder, "output.txt"), "w") as f:
+        for row in data:
+            f.write('\t'.join(str(item) for item in row) + '\n')
+
+
 if __name__ == "__main__":
     if len(sys.argv) == 3:
         # Format is: scriptname metadata1.txt data1.txt
@@ -81,12 +100,11 @@ if __name__ == "__main__":
 
         metaDataValue = fileExcluder(metaDataContent)
         dataValue = fileExcluder(dataContent)
-        print(metaDataValue)
-        print(dataValue)
         filteredMetaData = parseFile(metaDataValue, metaDataContent)
         filteredData = parseFile(dataValue, dataContent)
-        print(filteredMetaData)
-        print(filteredData)
+
+        combinedData = listCombine(filteredMetaData, filteredData)
+        write_file(combinedData)
 
 
     else :
