@@ -1,9 +1,23 @@
 import os
 import sys
 import fileinput
+"""
+name: FileHandle.py
+author: Stephen Roady
+date edited: 7/25/2025
+version: 0.9
+description: This program takes input of 2 text files that contains tab separated values. 
+The script filters these files using user entered parameters and combines them into one 
+file. 
+"""
 
-
-#takes file path, opens file at that location, removes \n
+"""
+name: take_file_input 
+parameter: filepath, the file path to the input folder 
+description: reads in a file, strips it, splits the values at '\t', 
+and add each item to a list. 
+return: list of arrays 
+"""
 def take_file_input(filepath):
     try:
         with open(filepath, 'r') as f:
@@ -17,7 +31,12 @@ def take_file_input(filepath):
         print(f"Error: File '{filepath}' not found.")
     except Exception as e:
         print(f"Error: '{e}'")
-
+"""
+name: splitValues
+parameters: contents, String
+description: Splits String into list of Strings when a tab is seen
+return: list of Strings
+"""
 def splitValues(contents):
     line = contents.split("\t")
     return line
