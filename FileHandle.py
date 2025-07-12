@@ -40,7 +40,12 @@ return: list of Strings
 def splitValues(contents):
     line = contents.split("\t")
     return line
-
+"""
+name: fileExcluder
+parameter: metaDataContent, 2d array
+description: Handles command line input for words to be excluded from file
+return: Dictionary of columns indices and words to be filtered
+"""
 def fileExcluder(metaDataContent):
     try:
         filterdata = ""
@@ -68,7 +73,13 @@ def fileExcluder(metaDataContent):
         return valuepairs
     except Exception as e:
         print(f"Error: '{e}'")
-
+"""
+name: parseFile 
+parameters: valuePair, dictionary of indices and words to filter
+            file, file to be filtered
+description: Removes unwanted lines from the file based on key value pairs
+return: A filtered file
+"""
 def parseFile(valuePair, file):
 
     normalizedValuePair = {
@@ -89,6 +100,13 @@ def parseFile(valuePair, file):
             newFile.append(row)
     return newFile
 
+"""
+name: listCombine
+parameters: metaData, file1
+            regularData, file2 
+description: Combines the 2 files into 1
+returns: Combined file
+"""
 def listCombine(metaData, regularData):
     referenceMeta = metaData[0]
 
@@ -99,7 +117,12 @@ def listCombine(metaData, regularData):
             newList.append(row)
 
     return newList
-
+"""
+name: write_file
+parameters: data, information to be written
+description: Writes data to a file named output.txt in current working directory
+return: void
+"""
 def write_file(data):
     output_folder = os.getcwd()
     os.makedirs(output_folder, exist_ok=True) #creates directory if it does not exist
